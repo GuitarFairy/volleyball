@@ -1,6 +1,6 @@
 # 검증 결과
 
-- `npm test`: 24개 통과.
+- `npm test`: 25개 통과.
 - `npm run test:ui`: 최신 12명 등록/코트9·대기3, AL/AM 공격수 선택/자기 제외/포지션 배지/강조/우클릭/Undo, 두 세트 독립 포지션·메모, 50회 연속 입력, 종료·전적·통계·조회 잠금 통과.
 - 실제 Chromium localhost 격리 픽스처: 좌/우클릭·Undo, 공격수 P 연동, 50회 입력, 서버 저장 완료, 새로고침 후 raw·메모 복원과 기록표 화면 확인.
 - 서버 SQLite/D1 계약 테스트: 비로그인 차단, 비허용 403, CSRF, 만료, 로그아웃, OAuth PKCE/state/세션 재발급/계정 전환, 원자적 롤백, stale revision 409, 별도 세션 복원, 백업 가져오기 왕복, 과거 명단·raw·settingLinks·setNotes 및 soft delete 보존.
