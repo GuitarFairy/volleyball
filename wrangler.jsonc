@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hwaiq-volleyball",
+  "main": "server/worker.js",
+  "compatibility_date": "2026-10-16",
+  "assets": {"directory": "./dist", "binding": "ASSETS", "run_worker_first": true},
+  "d1_databases": [{"binding": "DB", "database_name": "hwaiq-volleyball", "database_id": "0edd93b2-224c-4606-8959-965e2246d5b9", "migrations_dir": "migrations"}],
+  "vars": {"TEAM_ID": "hwaiq", "APP_ORIGIN": "https://hwaiq-volleyball.guitarfairy.workers.dev"},
+  "observability": {"enabled": false}
+}

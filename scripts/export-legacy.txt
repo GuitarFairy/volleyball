@@ -1,0 +1,10 @@
+// 기존 기록이 있는 데모/Work 사이트를 열고 해당 페이지의 브라우저 개발자 도구 Console에서 실행합니다.
+// 서버로 전송하지 않고 JSON 파일만 다운로드합니다. 기존 LocalStorage는 변경/삭제하지 않습니다.
+(() => {
+  const read = key => { const value = localStorage.getItem(key); return value ? JSON.parse(value) : null; };
+  const backup = {format:'hwaiq-local-export-v1',exportedAt:new Date().toISOString(),v2:read('volleyball-system-v2'),v1:read('volleyball-record-v1')};
+  if (!backup.v2 && !backup.v1) throw Error('이 브라우저/주소에는 기존 기록이 없습니다.');
+  const url = URL.createObjectURL(new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}));
+  const a = document.createElement('a'); a.href=url; a.download='hwaiq-local-original.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(url),1000);
+})();

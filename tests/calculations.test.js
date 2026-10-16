@@ -1,0 +1,4 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {calculate,teamTotal} from '../dist/calculations.js';
+test('Excel 수식 및 요청 시나리오',()=>{const raw={C:5,D:3,E:1,P:10,Q:4,R:2,S:1};const total=teamTotal([raw]);const v=calculate(raw,total);assert.equal(v.B,6);assert.ok(Math.abs(v.F-100/3)<1e-9);assert.equal(v.T,70);assert.equal(v.U,40);assert.equal(v.V,10);assert.equal(v.G,100);assert.equal(v.W,100)});
+test('서브·이단연결·수비 및 종합',()=>{const raw={AD:2,AE:3,AF:1,AG:2,AL:5,AM:2,H:4,I:1};const v=calculate(raw);assert.equal(v.AC,8);assert.equal(v.AH,75);assert.equal(v.AI,50);assert.equal(v.AJ,25);assert.equal(v.AK,7);assert.equal(v.N,80);assert.equal(teamTotal([raw,raw]).H,8);assert.equal(calculate(raw,{},2).O,2)});
+test('분모 0은 오류 대신 null',()=>{const v=calculate({});for(const k of ['F','G','N','T','U','V','W','AH','AI','AJ'])assert.equal(v[k],null)});

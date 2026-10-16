@@ -1,0 +1,14 @@
+PRAGMA foreign_keys = ON;
+CREATE TABLE teams (id TEXT PRIMARY KEY, revision INTEGER NOT NULL DEFAULT 0, write_token TEXT);
+INSERT INTO teams(id) VALUES ('hwaiq');
+CREATE TABLE users (id TEXT PRIMARY KEY, login TEXT NOT NULL);
+CREATE TABLE memberships (team_id TEXT NOT NULL REFERENCES teams(id), user_id TEXT NOT NULL, role TEXT NOT NULL CHECK(role IN ('admin','recorder')), PRIMARY KEY(team_id,user_id));
+CREATE TABLE sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), csrf TEXT NOT NULL, expires_at INTEGER NOT NULL);
+CREATE TABLE oauth_states (state_hash TEXT PRIMARY KEY, verifier TEXT NOT NULL, expires_at INTEGER NOT NULL);
+CREATE TABLE players (team_id TEXT NOT NULL REFERENCES teams(id), id TEXT NOT NULL, data TEXT NOT NULL CHECK(json_valid(data)), PRIMARY KEY(team_id,id));
+CREATE TABLE games (team_id TEXT NOT NULL REFERENCES teams(id), id TEXT NOT NULL, data TEXT NOT NULL CHECK(json_valid(data)), PRIMARY KEY(team_id,id));
+CREATE TABLE game_players (team_id TEXT NOT NULL, game_id TEXT NOT NULL, player_id TEXT NOT NULL, data TEXT NOT NULL CHECK(json_valid(data)), PRIMARY KEY(team_id,game_id,player_id), FOREIGN KEY(team_id,game_id) REFERENCES games(team_id,id) ON DELETE CASCADE);
+CREATE TABLE sets (team_id TEXT NOT NULL, game_id TEXT NOT NULL, set_index INTEGER NOT NULL, data TEXT NOT NULL CHECK(json_valid(data)), PRIMARY KEY(team_id,game_id,set_index), FOREIGN KEY(team_id,game_id) REFERENCES games(team_id,id) ON DELETE CASCADE);
+CREATE TABLE player_set_stats (team_id TEXT NOT NULL, game_id TEXT NOT NULL, set_index INTEGER NOT NULL, player_id TEXT NOT NULL, raw TEXT NOT NULL CHECK(json_valid(raw)), PRIMARY KEY(team_id,game_id,set_index,player_id), FOREIGN KEY(team_id,game_id,set_index) REFERENCES sets(team_id,game_id,set_index) ON DELETE CASCADE);
+CREATE TABLE audit (id TEXT PRIMARY KEY, team_id TEXT NOT NULL REFERENCES teams(id), user_id TEXT NOT NULL, revision INTEGER NOT NULL, action TEXT NOT NULL, created_at INTEGER NOT NULL);
+CREATE INDEX session_expiry ON sessions(expires_at);

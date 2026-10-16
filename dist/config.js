@@ -1,0 +1,10 @@
+export const positions=['S','L','R','Q','ML','MR','C','CB','LB','RB','Server'];
+export const gameTypes=['연습경기','리그','토너먼트','친선경기','기타'];
+export const statusLabels={scheduled:'예정',in_progress:'진행 중',completed:'종료'};
+export const teamName='화이큐';
+export const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+export const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+export const matchFormats={best_of_5:{label:'5판 3선승',maxSets:5,setsToWin:3},best_of_3:{label:'3판 2선승',maxSets:3,setsToWin:2},single:{label:'단판',maxSets:1,setsToWin:1}};
+export const courtPositions=['front_left','front_center','front_right','middle_left','middle_center','middle_right','back_left','back_center','back_right'];
+export const courtRows=['전위','중위','후위'];
+export const formatFor=game=>matchFormats[game.format]||Object.values(matchFormats).find(f=>f.maxSets===game.maxSets)||matchFormats.best_of_3;

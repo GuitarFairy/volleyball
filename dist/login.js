@@ -1,0 +1,2 @@
+const info=document.querySelector('#loginInfo');
+try{const r=await fetch('/api/auth/status',{cache:'no-store',credentials:'same-origin'});if(r.ok){const s=await r.json();info.textContent=`${s.login} 계정으로 로그인됨. 화이큐 접근은 관리자 승인이 필요합니다.`;const b=document.createElement('button');b.textContent='로그아웃 / 다른 계정 사용';b.onclick=async()=>{await fetch('/api/auth/logout',{method:'POST',credentials:'same-origin',headers:{'X-CSRF-Token':s.csrf}});location.replace('/login')};info.after(b);}}catch{info.textContent='로그인 상태 확인에 실패했습니다. 다시 시도하세요.';}
