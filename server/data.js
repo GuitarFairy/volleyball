@@ -6,7 +6,7 @@ const unique=(xs,key)=>new Set(xs.map(x=>x[key])).size===xs.length;
 export function validateData(input){
  if(!input||input.version!==2||!Array.isArray(input.players)||!Array.isArray(input.games))bad('백업 데이터 형식이 올바르지 않습니다.');
  const db=structuredClone(input);
- if(db.players.length>2000||db.games.length>3000||!unique(db.players,'id')||!unique(db.games,'id'))bad('데이터 개수 또는 중복 ID를 확인하세요.');
+ if(!unique(db.players,'id')||!unique(db.games,'id'))bad('중복 ID를 확인하세요.');
  for(const p of db.players)if(!id(p.id)||typeof p.name!=='string'||!p.name.trim())bad('선수 정보가 올바르지 않습니다.');
  for(const g of db.games){
   if(!id(g.id)||![1,3,5].includes(g.maxSets)||!Array.isArray(g.roster)||!Array.isArray(g.sets)||g.sets.length!==g.maxSets||!unique(g.roster,'playerId'))bad('경기 정보가 올바르지 않습니다.');

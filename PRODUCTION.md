@@ -45,7 +45,7 @@ node scripts/team-admin.mjs revoke TeamMemberLogin
 Node.js 24 이상과 npm을 사용합니다.
 
 ```powershell
-npm install --ignore-scripts
+npm ci --ignore-scripts
 npm test
 npm run test:ui
 node scripts/cloudflare.mjs login
